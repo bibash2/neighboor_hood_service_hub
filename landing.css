@@ -1,0 +1,283 @@
+/* @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300); */
+body{
+  /* background-color: #e2e2e2; */
+  padding: 0;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.fa-2x {
+font-size: 2em;
+}
+
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size: 20px;
+}
+
+
+.main-menu:hover,
+nav.main-menu.expanded {
+width: 250px;
+overflow: visible;
+}
+
+.main-menu {
+background: #084b83;
+border-right: 1px solid #e5e5e5;
+position: absolute;
+top: 0;
+bottom: 0;
+height: 100%;
+left: 0;
+width: 250px;
+/* overflow: hidden; */
+-webkit-transition: width .05s linear;
+transition: width .05s linear;
+z-index: 1000;
+}
+
+.main-menu>ul {
+margin: 7px 0;
+}
+
+.main-menu li {
+position: relative;
+display: block;
+width: 250px;
+}
+
+.main-menu li>a,
+.post li>a {
+position: relative;
+display: table;
+border-collapse: collapse;
+border-spacing: 0;
+color: whitesmoke;
+font-family: arial;
+font-size: 14px;
+text-decoration: none;
+-webkit-transition: all .1s linear;
+transition: all .1s linear;
+
+}
+
+.main-menu .nav-icon {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size: 18px;
+}
+
+.main-menu .nav-text {
+position: relative;
+display: table-cell;
+vertical-align: middle;
+width: 190px;
+font-family:  sans-serif;
+}
+
+.main-menu>.logout {
+position: absolute;
+left: 0;
+bottom: 0;
+}
+
+.no-touch .scrollable.hover {
+overflow-y: hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y: auto;
+overflow: visible;
+}
+
+a:hover,
+a:focus {
+text-decoration: none;
+}
+
+nav {
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+
+nav ul,
+nav li {
+outline: 0;
+margin: 0;
+padding: 0;
+}
+
+.main-menu li:hover>a,
+nav.main-menu li.active>a,
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus,
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover,
+.dropdown-menu>.active>a:focus,
+.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
+.dashboard-page nav.dashboard-menu ul li.active a {
+color: #fff;
+transition: background-color 0.3s ease;
+background-color: #c6dbf0;
+box-shadow: 1px 1px 1px #7ebce3;
+transition: box-shadow 0.3s ease;
+}
+
+.area {
+float: left;
+background: #e2e2e2;
+width: 100%;
+height: 100%;
+}
+
+@font-face {
+font-family: sans-serif;
+font-style: normal;
+font-weight: 300;
+src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+}
+.post{
+  box-sizing: border-box;
+  height: 7vh;
+  width: 100.5%;
+  background-color: #084b83;
+  border-collapse: collapse;
+  position: relative;
+  bottom: 1rem;
+}
+
+.post ul{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-decoration: none;
+  position: relative;
+  bottom: 1.2rem;
+  right: 2rem;
+}
+.post ul li{
+  list-style-type: none;
+  margin: 10px;
+  padding: 1rem;
+}
+.post ul li a{
+  box-sizing: border-box;
+  height: 5vh;
+  width: 100%;
+  border-radius: 15px;
+  /* background-color: aquamarine; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  font-family: sans-serif;
+}
+.post ul li a:hover{
+  padding: 0.6rem;
+  color: whitesmoke;
+  transition: 0.3s all ease;
+  background-color: #c6dbf0;
+}
+.post ul li a button{
+  border:none;
+  border-spacing: 0;
+  padding: 0.6rem;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: transparent;
+  font-size: 1rem;
+  color: whitesmoke;
+}
+.all-service-post{
+  box-sizing: border-box;
+  height: 93vh;
+  width: 60%;
+  position: relative;
+  left: 9rem;
+  bottom: 1rem;
+  /* background-color:whitesmoke; */
+}
+.profile{
+position: relative;
+width: 10%;
+height: 6%;
+overflow: hidden;
+cursor: pointer;
+padding: 2rem;
+left: 50%;
+}
+.profile button{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+.menu a{
+  text-decoration: none;
+  color: black;
+  font-family: sans-serif;
+}
+.menu{
+position: absolute;
+top: 50px;
+left: 78.4rem;
+padding: 10px 20px;
+background: #efeded;
+width: 200px;
+box-sizing: 0 5px 5px black;
+padding: 2rem;
+border-radius: 15px;
+transition: 0.5s;
+visibility: hidden;
+opacity: 0;
+box-shadow:  3px 1rem 1rem rgba(16, 16, 130, 0.1);
+}
+.menu.active{
+top: 80px;
+visibility: visible;
+opacity: 1;
+}
+.menu h3{
+width: 100%;
+text-align: center;
+font-size: 18px;
+padding: 10px 0;
+font-weight: 500;
+font-size: 18px;
+color: #555;
+line-height: 1.2em;
+}
+/* .menu::before{
+content: '';
+position: absolute;
+top: -5px;
+right: 28px;
+width: 20px;
+height: 20px;
+background: whitesmoke;
+transform: rotate(45deg);
+} */
+.menu ul li{
+list-style-type: none;
+padding: 10px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
