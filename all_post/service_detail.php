@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['logged_user_id'])) {
+    header("Location: ./php_login/logout.php");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -186,7 +196,7 @@
 
 <body>
     <?php
-    require "./includes/nav.php";
+    require_once "../includes/nav.php";
     ?>
     <!-- bid detail section -->
     <div class="container">
@@ -250,13 +260,27 @@
             }).then((response) => {
                 return response.json();
             }).then((data) => {
-                console.log(data);
+                const day_left = (date) => {
+                    const current_date = new Date();
+                    const date_of_complition = new Date(date);
+                    const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
+                    if (difference_in_days < 0) {
+                        return `closed`;
+                    }
+                    return `${difference_in_days} day left`;
+
+                }
+
+            const service_post_status = day_left(data.date_of_completion);
+            if(service_post_status==="closed"){
+                add_bid.style.display = "none";
+            }
                 container.innerHTML = `
         <div class="card">
             <div>Posted By: ${data.fullname}</div>
             <div class="header">
                 <h4>${data.title}</h4>
-                <p><span>5</span> days ago</p>
+                <p>${day_left(data.date_of_completion)}</p>
             </div>
             <p>${data.project_desc}</p>
             <div class="card-info">
@@ -300,8 +324,8 @@
 
                     const responseData = await response.json();
 
-                    if(responseData.success==true){
-                        bid_post.style.display ="none";
+                    if (responseData.success == true) {
+                        bid_post.style.display = "none";
                     }
 
 

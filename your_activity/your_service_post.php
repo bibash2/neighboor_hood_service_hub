@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['logged_user_id'])) {
+    header("Location: ./php_login/logout.php");
+    exit;
+}
+$user_id=$_SESSION['logged_user_id'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,12 +109,10 @@
         }).then(data => {
             data.reverse();
             data.forEach(element => {
-           
-
-
-                // Create HTML for each card and append it to the card container
-               
-                container.innerHTML += `
+                console.log(element)
+                // replace 3 with current user id
+                if(element.user_id ===<?php echo $user_id ?>){
+                    container.innerHTML += `
                     <a href="./your_service_detail.php?project_id=${element.project_id}" class="card-link">
 
                         <div class="card">
@@ -124,10 +132,12 @@
                         </div>
                     </a>
                 `;
+                }
+                return;
+                
             })
         })
         })
-        
     </script>
 
 </body>

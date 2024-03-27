@@ -11,9 +11,12 @@ require_once '../php_login/db_connection.php';
 // Handle HTTP methods
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
+   
     case 'GET':
+      
         // Read operation (fetch books)
         $stmt = $pdo->query('SELECT u.fullname,
+        u.user_id,
         sp.project_id,
         sp.title,
         sp.project_desc,

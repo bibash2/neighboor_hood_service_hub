@@ -1,12 +1,11 @@
 <?php
-// session_start();
-// if (isset($_SESSION['logged_user_id'])) {
-//     // Start the session if not already started
-//     $user_id = $_SESSION['logged_user_id'];
-// } else {
-//     header("location: ../php_login/logout.php");
-// }
 
+session_start();
+if (!isset($_SESSION['logged_user_id'])) {
+    header("Location: ./php_login/logout.php");
+    exit;
+}
+$user_id = $_SESSION['logged_user_id'];
 
 ?>
 <!DOCTYPE html>
@@ -132,7 +131,7 @@
 </head>
 
 <body>
-<?php require_once "./includes/nav.php" ?>
+<?php require_once "../includes/nav.php" ?>
     <form id="Form">
         <div class="container">
             <h1>Post Project</h1>
@@ -188,7 +187,9 @@
                         "address": address,
                         "contact": contact,
                         "budget": budget,
-                        "user_id": 3 // Assuming session ID represents user ID
+                        "user_id": <?php
+                            echo $user_id
+                        ?> // Assuming session ID represents user ID
                     };
 
                     const response = await fetch("http://localhost/neighboor_hood_service_hub/models/all_post.php", {
@@ -204,7 +205,7 @@
 
                     const responseData = await response.json();
                     if (responseData.success === true) {
-                        window.location.href = "index.php"
+                        window.location.href = "../index.php"
                         // window.location.href = "servicecard.php"
                     } else {
                         
