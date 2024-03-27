@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['logged_user_id'])) {
+    header("Location: ./php_login/logout.php");
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

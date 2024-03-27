@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../php_login/db_connection.php';
 // Set the content type to JSON
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
@@ -11,13 +11,14 @@ header("Access-Control-Allow-Headers: Content-Type");;
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case 'GET':
-        $service_provider_id = $_GET['service_provider_id'];
+        $service_provider_id =6;
         $stmt = $pdo->prepare('select r.review_id, r.review_text, r.rating, u.fullname,r.review_post_at
         from users u
         join review r on u.user_id = r.user_id
         where service_provider_id = ?');
-        $result = $stmt->exec([$service_provider_id]);
-        return json_encode($result);
+        $stmt->execute([$service_provider_id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($row);
 
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
@@ -40,7 +41,7 @@ switch ($method) {
     case 'DELETE':
         $review_id = $_GET['review_id'];
         $stmt = $pdo->prepare('DELETE from reviews where review_id = ?');
-        $result = $stmt->exec([$review_id]);
+        $result = $stmt->execute([$review_id]);
 
         if ($result) {
             echo (json_encode(["success" => $result]));

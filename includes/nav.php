@@ -63,3 +63,46 @@
     </div>
 
 </nav>
+
+<script>
+    async function get_service_provider() {
+        const user = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_user.php?user_id=${<?php echo $_SESSION['logged_user_id']  ?>}`);
+        const user_data = await user.json();
+
+        const service_provider = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_service_provider.php?user_id=${<?php echo $_SESSION['logged_user_id'];  ?>}`);
+        const service_provider_data = await service_provider.json();
+
+        if (user_data.user_id === service_provider_data.user_id) {
+
+            document.querySelector("nav").innerHTML = ` 
+    <div>
+        <li><a href="../../neighboor_hood_service_hub/all_post/servicecard.php">All Post</a></li>
+        <li><a href="../../neighboor_hood_service_hub/service_provider/service_provider.php">Service Provider</a></li>
+        <li><a href="../../neighboor_hood_service_hub/your_activity/your_service_post.php">Your Activity</a></li>
+        <li><a href="../../neighboor_hood_service_hub/Your_work/your_work.php?service_provider_id=${service_provider_data.service_provider_id}">Your work</a></li>
+    </div>
+
+    <div>
+        <li><a href="../../neighboor_hood_service_hub/service_post/servicePostForm.php">Post</a></li>
+        <li><a href="">${user_data.fullname}</a></li>
+    </div>`;
+        } else {
+            document.querySelector("nav").innerHTML = ` 
+    <div>
+        <li><a href="../../neighboor_hood_service_hub/all_post/servicecard.php">All Post</a></li>
+        <li><a href="../../neighboor_hood_service_hub/service_provider/service_provider.php">Service Provider</a></li>
+        <li><a href="../../neighboor_hood_service_hub/your_activity/your_service_post.php">Your Activity</a></li>
+    </div>
+
+    <div>
+        <li><a href="../../neighboor_hood_service_hub/service_post/servicePostForm.php">Post</a></li>
+        <li><a href="">${user_data.fullname}</a></li>
+    </div>`;
+        }
+
+
+
+    }
+
+    get_service_provider();
+</script>

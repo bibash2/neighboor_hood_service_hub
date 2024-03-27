@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['logged_user_id'])) {
+    header("Location: ./php_login/logout.php");
+    exit;
+}
+$user_id = $_SESSION["logged_user_id"];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +81,7 @@
 
 <body>
     <?php
-    require "./includes/nav.php";
+    require "../includes/nav.php";
     ?>
     <div class="container">
 
@@ -86,24 +97,27 @@
             }).then((response) => {
                 return response.json();
 
-
-
             }).then(data => {
                 data.reverse();
+            console.log(<?php echo $user_id; ?>)
                 data.forEach(element => {
-
-                    const day_ago = (date) => {
+                    console.log(element)
+                    const day_left = (date) => {
                         const current_date = new Date();
                         const date_of_complition = new Date(date);
-                        const difference_in_days = Math.floor((date_of_complition-current_date) / (1000 * 24 * 60 * 60));
-                        if (difference_in_days == 0) {
-                            return `recently`;
+                        const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
+                        if (difference_in_days < 0) {
+                            return `closed`;
                         }
                         return `${difference_in_days} day left`;
 
                     }
 
+
                     // Create HTML for each card and append it to the card container
+                    if (element.user_id == <?php echo $user_id; ?> ) {
+                        return;
+                    }
 
                     container.innerHTML += `
                     <a href="./service_detail.php?project_id=${element.project_id}" class="card-link">
@@ -112,7 +126,7 @@
                          <div>Posted By:${element.fullname}</div>
                             <div class="header">
                                 <h4>${element.title}</h4>
-                                <p>${day_ago(element.date_of_completion)}</p>
+                                <p>${day_left(element.date_of_completion)}</p>
                             </div>
                             <p>${element.project_desc}</p>
                             <div class="card-info">
