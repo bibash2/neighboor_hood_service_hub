@@ -58,7 +58,7 @@ if (!isset($_SESSION['logged_user_id'])) {
 
     <script>
         const all_work = document.querySelector(".show_all_work");
-        const work_detail = document.querySelector(".work_detail");
+
 
 
         async function show_work_detail() {
@@ -66,17 +66,18 @@ if (!isset($_SESSION['logged_user_id'])) {
                 method: "GET"
             });
             const works = await response.json();
-            console.log(works)
-            works.forEach(work => {
+            var index = 1
+            await works.forEach(work => {
+
                 all_work.innerHTML +=
-                    `<div class="work_card">
+                    `<div class="work_card" >
             <p>Posted By:${work.fullname}</p>
             <p>${work.work_desc}</p>
             <p>${work.work_buget}</p>
             <p>${work.location}</p>
         </div>
         
-        <div class="work_detail">
+        <div class="work_detail" data-id="${index++}">
             <button class="remove">remove</button>
             <p>posted by:${work.fullname}</p>
             <p>${work.work_posted_at}</p>
@@ -92,43 +93,27 @@ if (!isset($_SESSION['logged_user_id'])) {
         </div>`
             });
 
-            const work_card = document.querySelector(".work_card");
-            // work_card.addEventListener("click", () => {
-            //     document.querySelector(".work_detail").style.display = "block"
-            // });
 
-            // document.querySelector(".remove").addEventListener("click", (event) => {
-            //     event.stopPropagation();
-            //     document.querySelector(".work_detail").style.display = "none"
-            // });
+            const work_details = document.querySelectorAll(".work_detail")
+            work_details.forEach(work_detail => {
+                work_detail.style.display="none";
+            })
 
-            work_card.addEventListener("click", function(event) {
-                const target = event.target;
+            const workCards = document.querySelectorAll('.work_card');
 
-                // Check if the clicked element is a work card
-                if (target.closest('.work_card')) {
-                    const workDetail = target.closest('.work_container').querySelector('.work_detail');
+            workCards.forEach((workCard, index) => {
+                workCard.addEventListener('click', () => {
 
-                    // Toggle display of work detail
-                    if (workDetail.style.display === "block") {
-                        workDetail.style.display = "none";
-                    } else {
-                        // Hide all other work details
-                        const allDetails = document.querySelectorAll('.work_detail');
-                        allDetails.forEach(detail => {
-                            if (detail !== workDetail) {
-                                detail.style.display = "none";
-                            }
-                        });
-                        workDetail.style.display = "block";
-                    }
-                }
-
-                // Check if the clicked element is a remove button
-                if (target.classList.contains('remove')) {
-                    const workDetail = target.closest('.work_detail');
+                    const workDetail = document.querySelector(`.work_detail[data-id="${index + 1}"]`);
+                    console.log(workDetail)
+                   const removeBtn = document.querySelector(".remove");
+                   removeBtn.addEventListener("click", ()=>{
                     workDetail.style.display = "none";
-                }
+                   })
+                    if (workDetail) {
+                        workDetail.style.display="block"
+                    }
+                });
             });
         }
 

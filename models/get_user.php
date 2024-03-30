@@ -13,9 +13,12 @@ switch ($method) {
     case "GET":
 
         $user_id = $_GET['user_id'];
-        $stmt = $pdo->prepare("SELECT * from users where user_id=?");
+        $stmt = $pdo->prepare("select u.fullname, sp.category_id
+        from users u
+        join service_provider sp on u.user_id = sp.user_id
+        where u.user_id = ?;");
         $stmt->execute([$user_id]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
        echo json_encode($result);
 }

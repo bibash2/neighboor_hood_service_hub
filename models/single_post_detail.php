@@ -33,7 +33,8 @@ switch ($method) {
             sp.address,
             sp.contact,
             sp.budget,
-            c.category_name
+            c.category_name,
+            sp.category_id
             FROM service_post sp
             JOIN users u ON sp.user_id = u.user_id
             JOIN category c ON sp.category_id = c.category_id
