@@ -5,7 +5,7 @@ if (!isset($_SESSION['logged_user_id'])) {
     header("Location: ./php_login/logout.php");
     exit;
 }
-
+$user_id = $_SESSION['logged_user_id'];
 ?>
 
 <!DOCTYPE html>
@@ -213,7 +213,7 @@ if (!isset($_SESSION['logged_user_id'])) {
     <div class="bid hidden">
 
         <label for="bid_amount">Bid:</label>
-        <input type="text" id="bid_amount" name="bid_amount"><br>
+        <input type="number" id="bid_amount" name="bid_amount"><br>
         <label for="bid_desc">Description</label>
         <input type="text" id="bid_desc" name="bid_desc"><br>
         <button class="submit">Submit</button>
@@ -250,31 +250,71 @@ if (!isset($_SESSION['logged_user_id'])) {
             });
 
 
+            // check wheter the service_provider category and project category is equal or not
+            const able_to_bid = async (user_id, project_category_id) => {
+                // first check whether the user is register as a service provider or not
+                const response1 = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_user.php?user_id=${user_id}`);
+                const user = await response1.json();
+                if (user.length == 0) {
+                    return false;
+                }
+                else if(user.category_id == project_category_id){
+                    return true
+                }
+                return false;
+            }
 
 
 
+
+
+
+
+
+            const total_bid = async (project_id) => {
+                const response = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_bid.php?project_id=${project_id}`, {
+                    method: "GET"
+                })
+
+                const bids = await response.json();
+                return bids.total_bid;
+
+            }
+
+
+
+
+
+            const day_left = (date) => {
+                const current_date = new Date();
+                const date_of_complition = new Date(date);
+                const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
+                if (difference_in_days < 0) {
+                    return `closed`;
+                }
+                return `${difference_in_days} day left`;
+
+            }
             // get the single post detail from the database 
             const container = document.querySelector(".container");
             fetch(`http://localhost/neighboor_hood_service_hub/models/single_post_detail.php?project_id=${project_id}`, {
                 method: "GET"
             }).then((response) => {
                 return response.json();
-            }).then((data) => {
-                const day_left = (date) => {
-                    const current_date = new Date();
-                    const date_of_complition = new Date(date);
-                    const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
-                    if (difference_in_days < 0) {
-                        return `closed`;
-                    }
-                    return `${difference_in_days} day left`;
-
+            }).then(async (data) => {
+                console.log(data)
+                const bid = await total_bid(project_id);
+                const able_to_bid_in_post = await able_to_bid(<?php echo $user_id; ?>, data.category_id);
+                if(able_to_bid_in_post){
+                    add_bid.style.display = "block";
+                }else{
+                    add_bid.style.display = "none";
                 }
 
-            const service_post_status = day_left(data.date_of_completion);
-            if(service_post_status==="closed"){
-                add_bid.style.display = "none";
-            }
+                const service_post_status = day_left(data.date_of_completion);
+                if (service_post_status === "closed") {
+                    add_bid.style.display = "none";
+                }
                 container.innerHTML = `
         <div class="card">
             <div>Posted By: ${data.fullname}</div>
@@ -288,7 +328,7 @@ if (!isset($_SESSION['logged_user_id'])) {
                 <span>${data.category_name}</span>
                 <span>Address: ${data.address}</span>
                 <span>Deadline: ${data.date_of_completion}</span>
-                <p>1 bid</p>
+                <p>${bid} bid</p>
             </div>
         </div>`;
             }).catch((error) => {
@@ -306,12 +346,14 @@ if (!isset($_SESSION['logged_user_id'])) {
                 try {
                     const bid_amount = document.querySelector("#bid_amount").value;
                     const bid_desc = document.querySelector('#bid_desc').value;
-                    const message = document.querySelector('.message');
+
                     data = {
                         "bid_amount": bid_amount,
                         "bid_desc": bid_desc,
                         "project_id": project_id,
-                        "user_id": 1
+                        "user_id": <?php
+                                    echo $user_id;
+                                    ?>
                     }
 
                     const response = await fetch("http://localhost/neighboor_hood_service_hub/models/bid.php", {
@@ -324,21 +366,21 @@ if (!isset($_SESSION['logged_user_id'])) {
 
                     const responseData = await response.json();
 
-                    if (responseData.success == true) {
-                        bid_post.style.display = "none";
-                    }
+                    // if (responseData.success == true) {
+                    //     bid_post.style.display = "none";
+                    // }
 
 
 
-                    if (responseData == true) {
-                        message.classList.remove("hidden");
-                        message.style.backgroundColor = "green";
-                        message.innerHTML = "Your bid added succesfully"
-                    } else {
-                        message.classList.remove("hidden");
-                        message.style.backgroundColor = "red";
-                        message.innerHTML = "Unable to add the bid! Please try again";
-                    }
+                    // if (responseData == true) {
+                    //     message.classList.remove("hidden");
+                    //     message.style.backgroundColor = "green";
+                    //     message.innerHTML = "Your bid added succesfully"
+                    // } else {
+                    //     message.classList.remove("hidden");
+                    //     message.style.backgroundColor = "red";
+                    //     message.innerHTML = "Unable to add the bid! Please try again";
+                    // }
                 } catch (error) {
                     console.log(error)
                 }
@@ -346,6 +388,7 @@ if (!isset($_SESSION['logged_user_id'])) {
 
             })
             // Get the all the bid post form the database
+
 
             let all_bid = document.querySelector('.all_bid');
             fetch(`http://localhost/neighboor_hood_service_hub/models/bid.php?project_id=${project_id}`, {
@@ -356,13 +399,12 @@ if (!isset($_SESSION['logged_user_id'])) {
                 .then((data) => {
                     data.reverse();
                     data.forEach(bid => {
-                        console.log(bid.fullname)
                         all_bid.innerHTML += `
         <div class="posted_bid">
             <div>
                 <p class="user_name"><span>${bid.fullname}</span></p>
                 <p class="bid_amount"> Bid amount: ${bid.bid_amount}</p>
-                <p class="posted date">Posted at: ${bid.bid_post_date}</p>
+                <p class="posted date">Posted: ${day_ago(bid.bid_post_date)}</p>
             </div>
             <p class="bid_desc">${bid.bid_desc}</p>
         </div> `
@@ -370,7 +412,15 @@ if (!isset($_SESSION['logged_user_id'])) {
                     });
 
                 })
-
+            const day_ago = (date) => {
+                const current_data = new Date();
+                const posted_date = new Date(date);
+                const difference_in_days = Math.floor((current_data - posted_date) / (1000 * 24 * 60 * 60));
+                if (difference_in_days == 0) {
+                    return `recently`;
+                }
+                return `${difference_in_days} day ago`;
+            }
 
         });
     </script>

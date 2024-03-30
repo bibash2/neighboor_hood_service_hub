@@ -13,14 +13,13 @@ switch ($method) {
 
 
     case 'GET':
-        $service_provider_id = $_GET["service_provider_id"];
-        $stmt = $pdo->prepare('SELECT u.fullname, c.category_name, sp.location, sp.contact, sp.service_provider_id, sp.category_id
-        FROM service_provider sp
-        JOIN users u ON sp.user_id = u.user_id
-        JOIN category c ON sp.category_id = c.category_id
-        WHERE service_provider_id= ?;');
-        $stmt->execute([$service_provider_id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $project_id = $_GET["project_id"];
+        $stmt = $pdo->prepare('SELECT count(b.bid_id) total_bid
+        from bid b
+        JOIN service_post s ON s.project_id = b.project_id
+        where b.project_id =?;');
+        $stmt->execute([$project_id]);
+        $row = $stmt->fetch();
         echo json_encode($row);
         break;
 

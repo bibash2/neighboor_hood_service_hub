@@ -66,13 +66,13 @@
 
 <script>
     async function get_service_provider() {
-        const user = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_user.php?user_id=${<?php echo $_SESSION['logged_user_id']  ?>}`);
+        const user = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_user.php?user_id=${<?php echo $_SESSION['logged_user_id'];  ?>}`);
         const user_data = await user.json();
-
+       
         const service_provider = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_service_provider.php?user_id=${<?php echo $_SESSION['logged_user_id'];  ?>}`);
         const service_provider_data = await service_provider.json();
-
-        if (user_data.user_id === service_provider_data.user_id) {
+      
+        if (<?php echo $_SESSION['logged_user_id'];  ?> === service_provider_data.user_id) {
 
             document.querySelector("nav").innerHTML = ` 
     <div>
@@ -84,7 +84,7 @@
 
     <div>
         <li><a href="../../neighboor_hood_service_hub/service_post/servicePostForm.php">Post</a></li>
-        <li><a href="">${user_data.fullname}</a></li>
+        <li><a href="">${user_data[0].fullname}</a></li>
     </div>`;
         } else {
             document.querySelector("nav").innerHTML = ` 
@@ -96,7 +96,7 @@
 
     <div>
         <li><a href="../../neighboor_hood_service_hub/service_post/servicePostForm.php">Post</a></li>
-        <li><a href="">${user_data.fullname}</a></li>
+        <li><a href="">${user_data[0].fullname}</a></li>
     </div>`;
         }
 

@@ -21,6 +21,7 @@ if (!isset($_SESSION['logged_user_id'])) {
     <?php
     require "../includes/nav.php"
     ?>
+    <input type="search" id="search">
     <div class="display_service-provider">
         <!-- <div class="service_provider_card">
             <a href="service_provider_detail.php">
@@ -34,30 +35,48 @@ if (!isset($_SESSION['logged_user_id'])) {
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             const display_serivce_providers = document.querySelector(".display_service-provider");
-            fetch("http://localhost/neighboor_hood_service_hub/models/all_service_provider.php", {
-                    method: "GET"
-                })
+            const response = await fetch("http://localhost/neighboor_hood_service_hub/models/all_service_provider.php", {
+                method: "GET"
+            })
 
-                .then((response) => response.json())
+            const service_providers = await response.json();
+            console.log(service_providers);
+            service_providers.forEach((service_provider) => {
+                fetch(`http://localhost/neighboor_hood_service_hub/models/get_rating.php?service_provider_id=${service_provider.service_provider_id}`)
 
-                .then((service_providers) => {
-                    service_providers.forEach((service_provider) => {
-                     
-                      console.log(service_provider)
-                        display_serivce_providers.innerHTML += `
-                        <div class="service_provider_card">
-            <a href="service_provider_detail.php?service_provider_id=${service_provider.service_provider_id}">
+                    .then(response => response.json())
+                    .then((data) => {
+                            const lengthOfRating = data.length;
+                            var totalRating = 0;
+                            var rating = 0;
+                            if (lengthOfRating == 0) {
+                                rating = 0;
+                            } else {
+                                for (let x in data) {
+                                    totalRating += data[x].rating;
+                                }
+                                rating = totalRating/lengthOfRating;
+
+                            }
+
+
+                            display_serivce_providers.innerHTML += `
+        <div class="service_provider_card">
+            <a href="service_provider_detail.php?service_provider_id=${service_provider.service_provider_id}&rating=${rating}">
                 <b>${service_provider.fullname}</b>
                 <p>${service_provider.category_name}</p>
-                <p>rating</p>
+                <p>${rating}⭐</p>
                 <p>${service_provider.location}</p>
             </a>
         </div>
                         `
-                    })
-                })
+                        }
+
+                    )
+
+            })
         })
     </script>
 </body>

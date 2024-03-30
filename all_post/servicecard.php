@@ -88,38 +88,50 @@ $user_id = $_SESSION["logged_user_id"];
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let container = document.querySelector('.container');
-            console.log(container)
-
-            fetch("http://localhost/neighboor_hood_service_hub/models/all_post.php", {
-                method: "GET"
-            }).then((response) => {
-                return response.json();
-
-            }).then(data => {
-                data.reverse();
-            console.log(<?php echo $user_id; ?>)
-                data.forEach(element => {
-                    console.log(element)
-                    const day_left = (date) => {
-                        const current_date = new Date();
-                        const date_of_complition = new Date(date);
-                        const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
-                        if (difference_in_days < 0) {
-                            return `closed`;
-                        }
-                        return `${difference_in_days} day left`;
-
-                    }
+        // document.addEventListener("DOMContentLoaded", () => {
 
 
-                    // Create HTML for each card and append it to the card container
-                    if (element.user_id == <?php echo $user_id; ?> ) {
-                        return;
-                    }
+        const container = document.querySelector('.container');
 
-                    container.innerHTML += `
+        fetch("http://localhost/neighboor_hood_service_hub/models/all_post.php", {
+            method: "GET"
+        }).then((response) => {
+            return response.json();
+
+        }).then(data => {
+            data.reverse();
+
+            const day_left = (date) => {
+                const current_date = new Date();
+                const date_of_complition = new Date(date);
+                const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
+                if (difference_in_days < 0) {
+                    return `closed`;
+                }
+                return `${difference_in_days} day left`;
+
+            }
+
+            const total_bid = async (project_id) => {
+                const response = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_bid.php?project_id=${project_id}`, {
+                    method: "GET"
+                })
+
+                const bids = await response.json();
+                console.log(bids.total_bid)
+                return bids.total_bid;
+
+            }
+
+            data.forEach(async element => {
+                const bid = await total_bid(element.project_id);
+
+                // Create HTML for each card and append it to the card container
+                if (element.user_id == <?php echo $user_id; ?>) {
+                    return;
+                }
+
+                container.innerHTML += `
                     <a href="./service_detail.php?project_id=${element.project_id}" class="card-link">
 
                         <div class="card">
@@ -134,14 +146,16 @@ $user_id = $_SESSION["logged_user_id"];
                                 <span>Category: ${element.category_name}</span>
                                 <span>Address: ${element.address}</span>
                                 <span>Deadline: ${element.date_of_completion}</span>
-                                <span class="bid">4 bid</span>
+                                <span class="bid">${bid} bid</span>
                             </div>
                         </div>
                     </a>
                 `;
-                })
+
             })
+
         })
+        // })
     </script>
 
 </body>

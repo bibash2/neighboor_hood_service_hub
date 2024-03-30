@@ -108,8 +108,29 @@ $user_id=$_SESSION['logged_user_id'];
 
         }).then(data => {
             data.reverse();
-            data.forEach(element => {
-                console.log(element)
+            
+            const day_left = (date) => {
+                const current_date = new Date();
+                const date_of_complition = new Date(date);
+                const difference_in_days = Math.ceil((date_of_complition - current_date) / (1000 * 24 * 60 * 60));
+                if (difference_in_days < 0) {
+                    return `closed`;
+                }
+                return `${difference_in_days} day left`;
+
+            }
+
+            const total_bid = async (project_id) => {
+                const response = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_bid.php?project_id=${project_id}`, {
+                    method: "GET"
+                })
+
+                const bids = await response.json();
+                return bids.total_bid;
+
+            }
+            data.forEach(async element => {
+                const bid = await total_bid(element.project_id);
                 // replace 3 with current user id
                 if(element.user_id ===<?php echo $user_id ?>){
                     container.innerHTML += `
@@ -119,7 +140,7 @@ $user_id=$_SESSION['logged_user_id'];
                          <div>Posted By:${element.fullname}</div>
                             <div class="header">
                                 <h4>${element.title}</h4>
-                                <p><span>5</span> days ago</p>
+                                <p>${day_left(element.date_of_completion)}</p>
                             </div>
                             <p>${element.project_desc}</p>
                             <div class="card-info">
@@ -127,11 +148,12 @@ $user_id=$_SESSION['logged_user_id'];
                                 <span>Category: ${element.category_name}</span>
                                 <span>Address: ${element.address}</span>
                                 <span>Deadline: ${element.date_of_completion}</span>
-                                <span class="bid">4 bid</span>
+                                <span class="bid">${bid} bid</span>
                             </div>
                         </div>
                     </a>
                 `;
+
                 }
                 return;
                 
