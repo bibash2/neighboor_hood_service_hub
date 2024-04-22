@@ -11,44 +11,39 @@ header("Access-Control-Allow-Headers: Content-Type");;
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case 'GET':
-        $service_provider_id =6;
+        $service_provider_id = $_GET['service_provider_id'];
         $stmt = $pdo->prepare('select r.review_id, r.review_text, r.rating, u.fullname,r.review_post_at
         from users u
         join review r on u.user_id = r.user_id
         where service_provider_id = ?');
         $stmt->execute([$service_provider_id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($row);
+        break;
 
-    case 'POST':
+        
+    case "POST":
         $data = json_decode(file_get_contents('php://input'), true);
-        $review_text = $data['review_desc'];
-        $rating = $data['rating'];
-        $service_provider_id = $data['service_provider_id'];
-        $user_id = $data['user_id'];
+        if (!empty($data['review_desc'])) {
+            $review_text = $data['review_desc'];
+            $rating = $data['rating'];
+            $service_provider_id = $data['service_provider_id'];
+            $user_id = $data['user_id'];
 
-        $stmt = $pdo->prepare('INSERT INTO review (review_text, rating, service_provider_id, user_id)
-        VALUES(?,?,?,?)');
-        $result = $stmt->execute([$review_text, $rating, $service_provider_id, $user_id]);
+            $stmt = $pdo->prepare('INSERT INTO review (review_text, rating, service_provider_id, user_id)
+                VALUES(?,?,?,?)');
+            $result = $stmt->execute([$review_text, $rating, $service_provider_id, $user_id]);
 
-        if ($result) {
-            echo (json_encode(["success" => $result]));
+            if ($result) {
+                echo (json_encode(["success" => $result]));
+            } else {
+                echo json_encode(["success" => $result]);
+            }
         } else {
-            echo json_encode(["success" => $result]);
+            echo json_encode(["error" => "Review text cannot be empty"]);
         }
         break;
 
-    case 'DELETE':
-        $review_id = $_GET['review_id'];
-        $stmt = $pdo->prepare('DELETE from reviews where review_id = ?');
-        $result = $stmt->execute([$review_id]);
-
-        if ($result) {
-            echo (json_encode(["success" => $result]));
-        } else {
-            echo json_encode(["success" => $result]);
-        }
-        break;
 
     default:
         http_response_code(404);

@@ -14,9 +14,10 @@ switch ($method) {
 
     case 'GET':
         $user_id=$_GET["user_id"];
-        $stmt = $pdo->prepare("SELECT sp.service_provider_id , sp.user_id, sp.category_id
+        $stmt = $pdo->prepare("SELECT sp.service_provider_id , sp.user_id, sp.category_id, c.category_name
         from service_provider sp
-        join users u on u.user_id = sp.user_id 
+        join users u on u.user_id = sp.user_id
+        join category c on sp.category_id = c.category_id 
         where sp.user_id =?");
         $stmt->execute([$user_id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);

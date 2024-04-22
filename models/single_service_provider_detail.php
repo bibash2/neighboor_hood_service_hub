@@ -14,7 +14,7 @@ switch ($method) {
 
     case 'GET':
         $service_provider_id = $_GET["service_provider_id"];
-        $stmt = $pdo->prepare('SELECT u.fullname, c.category_name, sp.location, sp.contact, sp.service_provider_id, sp.category_id
+        $stmt = $pdo->prepare('SELECT u.fullname, c.category_name, sp.location, sp.contact, sp.service_provider_id, sp.category_id, sp.user_id
         FROM service_provider sp
         JOIN users u ON sp.user_id = u.user_id
         JOIN category c ON sp.category_id = c.category_id

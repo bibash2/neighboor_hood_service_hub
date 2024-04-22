@@ -1,0 +1,122 @@
+/* <div class="work_card" >
+            <p>Posted By:${work.fullname}</p>
+            <p>${work.work_desc}</p>
+            <p>${work.work_buget}</p>
+            <span class="status">${work.work_status}</span>
+            <p>${work.location}</p>
+   </div> */
+   .work_detail {
+    border-radius: 9px;
+    position: fixed;
+    top: 15%;
+    left: 25%;
+    right: 20%;
+    bottom: 20%;
+    height: fit-content;
+    width: 50%;
+    z-index: 4;
+    background-color: rgba(49, 40, 40, 0.8);
+    color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+}
+
+.overflow {
+    overflow: hidden;
+
+}
+
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4rem);
+    z-index: 1;
+}
+
+
+.work_card{
+    border: .1rem solid rgba(18, 16, 16, 1);
+    border-radius: 2rem;
+    height: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: .5rem;
+    text-align: center;
+    align-items: center;
+    background-color: #24393b;
+    color: #f5eeee;
+   
+}
+
+.work_card:hover{
+    cursor: pointer;
+    background: #08e3f7;
+}
+
+.accepted{
+    border-color: rgb(8, 242, 8);
+    color:  rgb(8, 242, 8);
+}
+
+.rejected{
+    border-color: rgb(247, 4, 4);
+    color: rgb(247, 4, 4);
+    
+}
+
+.expired{
+    border-color: rgb(168, 159, 159);
+    color: rgb(168, 159, 159);
+}
+
+.pending{
+    border-color: rgb(39, 96, 182);
+    color:rgb(39, 96, 182);
+}
+
+.show_all_work{
+    margin-top: 1rem;
+    margin-left: 20%;
+    margin-right: 20%; 
+}
+
+.work_info{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+body{
+    background-color: rgb(189, 182, 182);
+}
+
+.user{
+    color:#accfe9
+}
+.work_info .deadline{
+    color: #cf68a7;
+}
+
+.work_info .location{
+    color: #a5d293;
+}
+
+.work_info .budget{
+    color: #08f3f7;
+}
+
+.work_info .contact{
+    color: #9ed8a6;
+}
+
+.work_detail i{
+    color: rgb(210, 210, 197);
+}

@@ -11,9 +11,9 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case "GET":
-        $service_provider_id = 6;
+        $service_provider_id = $_GET['service_provider_id'];
 
-        $stmt = $pdo->prepare('SELECT w.work_id, u.fullname, w.work_buget, w.work_desc, w.service_provider_id, w.location, w.contact, w.deadline, w.work_post_at
+        $stmt = $pdo->prepare('SELECT w.work_id, u.fullname, w.work_buget, w.work_desc, w.service_provider_id, w.location, w.contact, w.deadline, w.work_post_at, w.work_status
         FROM work w
         JOIN users u ON w.user_id = u.user_id
         WHERE service_provider_id = ?');
@@ -28,11 +28,12 @@ switch ($method) {
         $work_desc = $data['work_desc'];
         $user_id = $data['user_id'];
         $service_provider_id = $data['service_provider_id'];
+        $deadline = $data['deadline'];
         $location = $data['location'];
         $contact = $data['contact'];
 
-        $stmt = $pdo->prepare('INSERT INTO work (work_buget,work_desc,user_id,service_provider_id,location,contact) values(?,?,?,?,?,?)');
-        $result = $stmt->execute([$work_buget, $work_desc, $user_id, $service_provider_id, $location, $contact]);
+        $stmt = $pdo->prepare('INSERT INTO work (work_buget,work_desc,user_id,service_provider_id,location,contact, deadline) values(?,?,?,?,?,?,?)');
+        $result = $stmt->execute([$work_buget, $work_desc, $user_id, $service_provider_id, $location, $contact, $deadline]);
 
         if ($result) {
             echo json_encode(["success" => $result]);
@@ -40,6 +41,22 @@ switch ($method) {
             echo json_encode(["success" => $result]);
         }
         break;
+
+
+    case 'PUT':
+        $data = json_decode(file_get_contents('php://input'), true);
+        $status = $data['status'];
+        $work_id = $data['work_id'];
+
+        $stmt = $pdo->prepare("UPDATE work set work_status=? WHERE work_id=?");
+        $result= $stmt->execute([$status,$work_id]);
+        if($result){
+            echo json_encode(["success"=>$result]);
+        }else{
+            echo json_encode(["success"=>$result]);
+        }
+        
+break;
 
     case 'DELETE':
         $work_id = $_GET['work_id'];
