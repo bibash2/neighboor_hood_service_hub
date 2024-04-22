@@ -8,18 +8,13 @@ header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type");;
 
 require_once '../php_login/db_connection.php';
+// Handle HTTP methods
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
-    case "GET":
-
-        $user_id = $_GET['user_id'];
-        $stmt = $pdo->prepare("SELECT fullname
-        FROM users 
-        WHERE user_id = ?;");
-        $stmt->execute([$user_id]);
+    case 'GET':
+        $stmt = $pdo->query("SELECT * from category");
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-       echo json_encode($result);
-}
-
-
+        echo json_encode($result);
+        break;
+    }
+    

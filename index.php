@@ -5,7 +5,8 @@ if (!isset($_SESSION['logged_user_id'])) {
     header("Location: ./php_login/logout.php");
     exit;
 }
-$user_id= 2;
+$user_id= $_SESSION['logged_user_id'];
+
 ?>
 
 

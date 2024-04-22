@@ -14,10 +14,10 @@ switch ($method) {
 
     case 'GET':
         $project_id = $_GET["project_id"];
-        $stmt = $pdo->prepare('SELECT count(b.bid_id) total_bid
-        from bid b
-        JOIN service_post s ON s.project_id = b.project_id
-        where b.project_id =?;');
+        $stmt = $pdo->prepare('SELECT COUNT(b.bid_id) AS total_bid
+                              FROM bid b
+                              JOIN service_post s ON s.project_id = b.project_id
+                              WHERE b.project_id = ?');
         $stmt->execute([$project_id]);
         $row = $stmt->fetch();
         echo json_encode($row);

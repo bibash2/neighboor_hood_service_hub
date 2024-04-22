@@ -12,7 +12,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case 'GET':
         $project_id = $_GET['project_id'];
-        $stmt = $pdo->prepare('SELECT b.bid_id, b.bid_amount, b.bid_desc, u.fullname, b.bid_post_date
+        $stmt = $pdo->prepare('SELECT b.bid_id, b.bid_amount, b.bid_desc, u.fullname, b.bid_post_date, b.user_id
             FROM bid b
             JOIN users u ON b.user_id = u.user_id
             WHERE b.project_id = ?;');
