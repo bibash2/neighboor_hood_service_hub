@@ -158,7 +158,7 @@
         <li><a href="../../neighboor_hood_service_hub/service_post/servicePostForm.php">Post</a></li>
         <li class="profile">${user_data[0].fullname}</li>
         <div class="profile_detail">
-            <button>Register as service Provider</button>
+            <button><a href="../../neighboor_hood_service_hub/includes/registerAsServiceProvider.php">Register as service Provider</button>
             <button><a href="../php_login/logout.php">Logout</a></button>
         </div>
     </div>
@@ -176,5 +176,18 @@
             const profieDetail = document.querySelector(".profile_detail");
             profieDetail.classList.toggle("show")
         })
-    });
+    })
+//     .then(()=>{
+//         const registerAsServiceProvicer = document.querySelector(".registerServiceProvider");
+//         if(registerAsServiceProvicer){
+//          registerAsServiceProvicer.addEventListener("click",()=>{
+//         <?php
+//              require_once "./registerAsServiceProvider.php";
+//               ?>
+       
+//     })
+//   }
+//     })
+    
+
 </script>

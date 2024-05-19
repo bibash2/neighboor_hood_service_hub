@@ -107,6 +107,8 @@ $user_id = $_SESSION['logged_user_id'];
                 </a>
             </div>
                             `
+                    }else{
+                        display_serivce_providers.innerHTML = `You are not register as a service Provider`
                     }
                 })
             })
