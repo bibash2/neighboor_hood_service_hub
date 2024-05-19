@@ -285,6 +285,10 @@ $user_id = $_SESSION["logged_user_id"];
                 })
 
                 const bids = await bid_response.json();
+                if(bids.lenght == 0){
+                    container.innerHTML = ``;
+                    container.innerHTML = `NO Post Found !`;
+                }
                 bids.forEach(bid => {
 
                     if (bid.user_id === <?php echo $user_id; ?>) {
@@ -310,6 +314,9 @@ $user_id = $_SESSION["logged_user_id"];
                         </div>
                     </a>
                 `;
+                    }else{
+                        container.innerHTML = ``;
+                    container.innerHTML = `NO Post Found !`;
                     }
                 })
             })
