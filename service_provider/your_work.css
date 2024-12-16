@@ -7,7 +7,7 @@
     text-decoration: none;
     display: flex;
     flex-direction: row;
-    background-color: rgb(9, 141, 88);
+    background-color: rgb(56, 61, 59);
     margin: 7px;
     cursor: pointer;
     justify-content: space-around;
@@ -15,7 +15,7 @@
 }
 
 .service_provider_card a:hover {
-    background-color: aqua;
+    background-color: rgb(66, 72, 72);
 }
 
 .popup_form {
@@ -28,7 +28,7 @@
     height: fit-content;
     width: max-content;
     z-index: 4;
-    background-color: rgba(0, 0, 1, 0.1);
+    background-color: rgba(2, 2, 9, 0.868);
 }
 
 .overflow {
@@ -147,27 +147,33 @@
     margin-top: 1rem;
 }
 
-.review_info {
+.review-info {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
-.review_card {
-    display:flex;
-    flex-direction: column;
-    gap: 4px;
-    background-color: #982e2e;
-    padding: 2px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2px;
+.review-header p {
+    font-size: 14px;
+    color: #333;
 }
 
-.review_card .review_text{
-    margin-top: -1rem;
-    margin-left: 20%;
+.review-header p:last-child {
+    margin-left: 10px; /* Add space between By: and rating */
+}
 
+.review-text {
+    font-size: 16px;
+    color: #555
 }

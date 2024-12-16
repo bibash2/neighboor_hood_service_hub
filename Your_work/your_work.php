@@ -14,10 +14,135 @@ $user_id = $_SESSION['logged_user_id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
-    <style>
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=77118&format=png&color=000000">
 
+    <link rel="stylesheet" href="./style.css">
+    <title>Neighboor Service Hub</title>
+        <style>
+        .work_detail {
+            border-radius: 9px;
+            position: fixed;
+            top: 15%;
+            left: 25%;
+            right: 20%;
+            bottom: 20%;
+            width: 50%;
+            z-index: 4;
+            background-color: rgba(34, 34, 34, 0.9);
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .overflow {
+            overflow: hidden;
+        }
+
+        .blur-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+
+        .work_card {
+            border: 1px solid rgba(50, 50, 50, 0.8);
+            border-radius: 1rem;
+            height: auto;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 1rem;
+            text-align: center;
+            align-items: center;
+            background-color: #354545;
+            color: #f5f5f5;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .work_card:hover {
+            cursor: pointer;
+            background: #08e3f7;
+            color: #fff;
+        }
+
+        .accepted {
+            border-color: rgb(8, 242, 8);
+            color: rgb(8, 242, 8);
+        }
+
+        .rejected {
+            border-color: rgb(247, 4, 4);
+            color: rgb(247, 4, 4);
+        }
+
+        .expired {
+            border-color: rgb(168, 159, 159);
+            color: rgb(168, 159, 159);
+        }
+
+        .pending {
+            border-color: rgb(39, 96, 182);
+            color: rgb(39, 96, 182);
+        }
+
+        .show_all_work {
+            margin-top: 1rem;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .work_info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            padding: 1rem;
+            border-top: 1px solid #555;
+            margin-top: 1rem;
+            color: #ddd;
+        }
+
+        body {
+            background-color: whitesmoke;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .user {
+            color: #80b3d1;
+        }
+
+        .work_info .deadline {
+            color: #d186a5;
+        }
+
+        .work_info .location {
+            color: #91c78f;
+        }
+
+        .work_info .budget {
+            color: #08e3f7;
+        }
+
+        .work_info .contact {
+            color: #a5d8a6;
+        }
+
+        .work_detail i {
+            color: rgb(210, 210, 197);
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 
@@ -162,7 +287,7 @@ $user_id = $_SESSION['logged_user_id'];
                 }
                 if (stat.innerHTML === "pending") {
                     stat.classList.add("pending");
-                    stat.parentElement.style.borderColor="rgb(39, 96, 182)"
+                    stat.parentElement.style.borderColor = "rgb(39, 96, 182)"
                 }
             })
 

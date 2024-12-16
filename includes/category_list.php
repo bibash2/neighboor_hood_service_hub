@@ -2,6 +2,7 @@
 <option value="0">All</option>
 </select>
 
+<style></style>
 <script>
     const all_category = document.querySelector("#category");
     async function get_category() {

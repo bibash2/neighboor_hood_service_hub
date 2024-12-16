@@ -8,15 +8,27 @@ function on_register($pdo)
 
     if (empty($name) || empty($email) || empty($pass)) {
         $arr = [];
-        if (empty($name)) $arr['name'] = "Must not be empty";
-        if (empty($email)) $arr['email'] = "Must not be empty";
-        if (empty($pass)) $arr['password'] = "Must not be empty";
+        if (empty($name)) {
+            $arr['name'] = "Must not be empty";
+        }
 
+        if (empty($email)) {
+            $arr['email'] = "Must not be empty";
+        }
+
+        if (empty($pass)) {
+            $arr['password'] = "Must not be empty";
+        }
         return [
             "ok" => 0,
             "field_error" => $arr
         ];
     }
+
+
+
+
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return [
             "ok" => 0,
@@ -26,37 +38,56 @@ function on_register($pdo)
         ];
     }
 
-    if (strlen($pass) < 4) {
+    if (strlen($pass) < 9) {
         return [
             "ok" => 0,
             "field_error" => [
-                "password" => "Must be at least 4 character."
+                "password" => "Must be at least 8 character."
             ]
         ];
     }
-   
+
+    if (!preg_match('/\d/', $pass)) {
+        return [
+            "ok" => 0,
+            "field_error" => [
+                "password" => "Password must contain at least one number"
+            ]
+        ];
+    }
+
+
+    if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $pass)) {
+        return [
+            "ok" => 0,
+            "field_error" => [
+                "password" => "Password must contain at least one special number"
+            ]
+        ];
+    }
+
     $stmt = $pdo->prepare("SELECT email FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $is_contain_email = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($is_contain_email){
+    if ($is_contain_email) {
         return [
             "ok" => 0,
-            "field_error" =>[
+            "field_error" => [
                 "email" => "This email is already registered."
             ]
-            ];
+        ];
     }
 
 
 
-    $pass = password_hash($pass, PASSWORD_BCRYPT);
+    // $pass = password_hash($pass, PASSWORD_BCRYPT);
     $stmt = $pdo->prepare("Insert into users ( email, fullname, password) values (?,?,?)");
-    $is_inserted=$stmt->execute([$email,$name,$pass]);
+    $is_inserted = $stmt->execute([$email, $name, $pass]);
 
-    if($is_inserted){
+    if ($is_inserted) {
         return [
-            "ok" =>1,
+            "ok" => 1,
             "msg" => "You have registered succesfuly.",
             "form_reset" => true
         ];
@@ -66,7 +97,4 @@ function on_register($pdo)
         "ok" => 0,
         "msg" => "something going wrong"
     ];
-
-
-    
 }

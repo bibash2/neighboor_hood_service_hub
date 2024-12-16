@@ -13,6 +13,8 @@ if (isset($_SESSION['logged_user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="index.css" class="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=77118&format=png&color=000000">
+
     <title>Neighborhood Service Hub</title>
     <style>
         .midbody h1 {
@@ -60,7 +62,7 @@ if (isset($_SESSION['logged_user_id'])) {
         </div> -->
         <div class="box">
             <div class="searchbar">
-                <input type="search" placeholder="Browse Services">
+                <!-- <input type="search" placeholder="Browse Services"> -->
                 <label for="" class="icon"><i class="fa-solid fa-magnifying-glass"></i></label>
             </div>
         </div>
@@ -91,9 +93,8 @@ if (isset($_SESSION['logged_user_id'])) {
             <div class="right-c">
                 <p style="font-family: sans-serif; text-align: center; color: rgb(229, 223, 223);">
                     <span style="font-size: 30px;">Neighborhood Service Hub</span><br><br>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab iure alias natus nesciunt reiciendis cum, facilis similique, distinctio dolorem mollitia suscipit dolorum vero,
-                    corrupti explicabo doloribus ratione sint sit! Labore.<br>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit dolores esse ullam quisquam, hic magni adipisci consequuntur iste! Iusto in tenetur repudiandae nobis nulla eos beatae eum expedita quod explicabo.
+                    Connect instantly with local experts on Neighbor Service Hub. Post your needs, call service providers directly, and get things done fast. Your neighborhood, your services, your convenience.<br>
+                    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit dolores esse ullam quisquam, hic magni adipisci consequuntur iste! Iusto in tenetur repudiandae nobis nulla eos beatae eum expedita quod explicabo. -->
                 </p>
             </div>
         </div>
@@ -124,7 +125,7 @@ if (isset($_SESSION['logged_user_id'])) {
             </ul>
         </div>
     </div>
-    <div class="spbox">
+    <!-- <div class="spbox">
         <p style="color:#084b83; font-family: sans-serif;
                 font-size: 2rem; font-weight: bold; display:flex; justify-content:center; align-items:center; margin-bottom:0;">Our highly rated service provider</p>
         <ul>
@@ -136,7 +137,7 @@ if (isset($_SESSION['logged_user_id'])) {
                 <li>hoho Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus, distinctio fugiat omnis corporis, culpa nam earum ullam explicabo dicta eligendi incidunt iure. Aut omnis rerum inventore excepturi illo voluptatem ratione.</li>
                 <li>hiehie Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor nisi quae quod iure inventore perferendis esse sequi delectus tenetur, necessitatibus deserunt velit eos beatae eius sint obcaecati! Veniam, id consectetur!</li>
             </div>
-    </div>
+    </div> -->
     </ul>
     <div class="details">
         <p>For more details</p>

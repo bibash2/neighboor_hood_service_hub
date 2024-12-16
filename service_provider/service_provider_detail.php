@@ -16,7 +16,74 @@ $user_id = $_SESSION['logged_user_id'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./your_work.css">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=77118&format=png&color=000000">
+
+    <title>Neighboor Service Hub</title>
+    <style>
+
+ .work_form, .review_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Make the border visible */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    margin-top: 30px; /* Add top margin */
+}
+
+#registerServiceProvider legend, .work_form legend {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+#registerServiceProvider label, .work_form label {
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+#registerServiceProvider input[type="tel"],
+#registerServiceProvider input[type="text"],
+#registerServiceProvider input[type="date"],
+#registerServiceProvider input[type="number"],
+#registerServiceProvider select,
+.work_form input[type="tel"],
+.work_form input[type="text"],
+.work_form input[type="date"],
+.work_form input[type="number"],
+.work_form select,
+.work_form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* Make the border visible */
+    border-radius: 3px;
+}
+
+#registerServiceProvider input[type="submit"],
+.work_form button[type="submit"] {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Green color for the submit button */
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#registerServiceProvider input[type="submit"]:hover,
+.work_form button[type="submit"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Hide the form initially */
+.hidden {
+    display: none;
+}
+    </style>
 
 </head>
 
@@ -45,7 +112,7 @@ $user_id = $_SESSION['logged_user_id'];
 
          </textarea><br>
         <label for="deadline">Deadline of the work</label>
-        <input type="date" id="deadline" require><br>
+        <input type="date" id="deadline" min="2024-06-19" require><br>
 
         <label for="budget">Budget</label>
         <input type="number" id="budget" require><br>
@@ -63,6 +130,7 @@ $user_id = $_SESSION['logged_user_id'];
 
     <!-- add review section -->
     <div class="review_form hidden">
+        <h3>Review Form</h3>
         <label for="review_desc">Review</label>
 
         <textarea for="review_desc" id="review_desc" row="5" cols="30"></textarea><br>
@@ -172,6 +240,25 @@ $user_id = $_SESSION['logged_user_id'];
 
 
         document.querySelector(".work_submit").addEventListener("click", async function() {
+            const contact = document.querySelector("#contact").value.trim();
+            const work_desc = document.querySelector("#work_desc").value.trim();
+            const location = document.querySelector("#location").value.trim()
+            const deadline = document.querySelector("#deadline").value.trim()
+
+            if (!contact || !work_desc || !location || !deadline) {
+                alert('Please fill up all the field');
+                return;
+            }
+
+            // Contact validation
+            if (contact.length < 10 || !(contact.startsWith('98') || contact.startsWith('97'))) {
+                alert('Phone no is not valid');
+                return;
+            }
+
+
+
+
             let data = {
                 "work_budget": document.querySelector("#budget").value.trim(),
                 "work_desc": document.querySelector("#work_desc").value.trim(),
@@ -223,16 +310,17 @@ $user_id = $_SESSION['logged_user_id'];
         }).then(response => {
             return response.json();
         }).then(reviews => {
+            reviews.reverse();
             const display_review = document.querySelector(".display_review");
             reviews.forEach(review => {
                 console.log(review)
                 display_review.innerHTML += `
                 <div class="review_card">
 <div class="review_info">
-            <p>${review.fullname}</p>
+            <p>By: ${review.fullname}</p>
             <p>${review.rating}⭐</p>
             </div>
-            <p class="review_text">${review.review_text}</p>
+            <p class="review_text">Comment: ${review.review_text}</p>
         </div>`;
             })
         })

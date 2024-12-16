@@ -14,81 +14,80 @@ $user_id = $_SESSION['logged_user_id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=77118&format=png&color=000000">
+    <title>Neighboor Service Hub</title>
     <style>
         .card {
             display: flex;
             flex-direction: column;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             border-radius: 8px;
-            padding: 15px;
-            margin: 15px;
+            padding: 20px;
+            margin: 20px auto;
             box-sizing: border-box;
             height: 40vh;
             width: 60%;
-            background-color: #f0eeee;
+            background-color: #444;
             transition: box-shadow 0.3s;
             position: relative;
-            left: 20%;
             font-family: sans-serif;
+            color: #fff;
         }
 
         .card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .header {
-            margin-bottom: 10px;
+            margin-bottom: 0;
         }
 
         .header h4 {
             margin: 0;
+            color: #fff;
         }
 
         .header p {
             font-size: 14px;
-            color: #777;
+            color: #bbb;
         }
 
         .card-info {
             display: flex;
-            flex-direction: column;
-            margin-top: 15px;
+            flex-direction: row;
+            gap: 6rem;
+            margin-top: 2rem;
         }
 
         .card-info span {
-            font-size: 12px;
-            color: #555;
+            font-size: 14px;
+            color: #fff;
+            background-color: #333;
+            padding: 5px;
+            border-radius: 4px;
         }
 
-        .add_bid button:hover {
-            background-color: #084b83;
-            transition: 0.5s all ease;
-            color: white;
+        .add_bid:hover {
+            background-color: #45a049;
         }
 
         .bid {
-            margin: 20px;
+            display: flex;
+            flex-direction: column;
             width: 30rem;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 15px;
+            border: 1px solid #444;
             border-radius: 8px;
-            background-color: #f0eeee;
+            background-color: #333;
             position: relative;
             left: 33%;
             font-family: sans-serif;
-            bottom: 4.5rem;
-        }
-
-        .bid input {
-            width: 92%;
-            position: relative;
-            left: 1.3rem;
+            bottom: 4rem;
+            color: #fff;
         }
 
         .bid label {
-            position: relative;
-            left: 1.3rem;
+            color: #eee;
         }
 
         form {
@@ -99,18 +98,19 @@ $user_id = $_SESSION['logged_user_id'];
 
         label {
             font-size: 16px;
-            margin-bottom: 2px;
-            color: #333;
-
+            margin-bottom: 5px;
+            color: #eee;
         }
 
         input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 5px;
-            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
             border-radius: 4px;
             box-sizing: border-box;
+            background-color: #666;
+            color: #fff;
         }
 
         input[type="submit"] {
@@ -124,10 +124,9 @@ $user_id = $_SESSION['logged_user_id'];
         }
 
         input[type="submit"]:hover {
-            background-color: #084b83;
+            background-color: #063b6d;
         }
 
-        /* Optional: Add styles for better visual clarity on focus */
         input:focus {
             border-color: #4CAF50;
             outline: none;
@@ -136,53 +135,51 @@ $user_id = $_SESSION['logged_user_id'];
 
         .posted_bid {
             align-items: center;
-            margin: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             border-radius: 8px;
-            background-color: #f0eeee;
+            background-color: #555;
             width: calc(100% - 2rem);
             position: relative;
             left: 33%;
             bottom: 4rem;
             max-width: 470px;
+            font-family: sans-serif;
+            color: #fff;
+            font-weight: 100;
         }
 
-        /* .posted_bid div {
-            display: flex;
-            justify-content: space-between;
-        } */
-
         .posted_bid>div {
-            margin-right: 15px;
+           display: flex;
+           flex-direction: row;
+           justify-content: space-around;
         }
 
         .user_name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            color: #333;
-            margin: 0;
+            color: #fff;
+           
         }
 
         .bid_amount {
-            font-size: 14px;
-            color: #777;
-            margin: 0;
+            font-size: 16px;
+            color: #ddd;
         }
 
         .bid_desc {
             font-size: 16px;
-            color: #555;
-            margin-top: 10px;
+            color: #ccc;
+            margin-left: 10px;
+            margin-top: -5px;
         }
 
         .hidden {
             display: none;
         }
 
-        button {
+        #add_bb {
             padding: 1rem;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             font-weight: bold;
             font-size: 1rem;
             font-family: sans-serif;
@@ -190,7 +187,37 @@ $user_id = $_SESSION['logged_user_id'];
             left: 70%;
             bottom: 4.5rem;
             border-radius: 15px;
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
         }
+
+        .card i {
+            margin-top: 2rem;
+        }
+
+        .header p {
+            color: #add8e6;
+        }
+
+        .card>div {
+            margin-bottom: 10px;
+        }
+
+        .bid button {
+            margin-left: 40%;
+            background: #45a049;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .bid button:hover {
+            background: #397d3c;
+        }
+       
     </style>
 </head>
 
@@ -203,11 +230,10 @@ $user_id = $_SESSION['logged_user_id'];
     </div>
 
     <!-- add bid button -->
-    <div class="add_bid">
-        <button>
-            Post Bid
-        </button>
-    </div>
+
+    <button class="add_bid" id="add_bb">
+        Post Bid
+    </button>
 
     <!-- bid form section -->
     <div class="bid hidden">
@@ -223,7 +249,7 @@ $user_id = $_SESSION['logged_user_id'];
 
 
     <!-- message section -->
-    <div class="message hidden"></div>
+
 
     <!-- bid post show section -->
     <div class="all_bid">
@@ -252,16 +278,19 @@ $user_id = $_SESSION['logged_user_id'];
 
             // check wheter the service_provider category and project category is equal or not
             const able_to_bid = async (user_id, project_category_id) => {
+                console.log("userId = ", user_id, "pro=", project_category_id)
                 // first check whether the user is register as a service provider or not
-                const response1 = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_user.php?user_id=${user_id}`);
+                const response1 = await fetch(`http://localhost/neighboor_hood_service_hub/models/get_service_provider.php?user_id=${user_id}`);
                 const user = await response1.json();
+
                 if (user.length == 0) {
+
+                    return false;
+                } else if (user.category_id == project_category_id) {
+                    return true
+                } else {
                     return false;
                 }
-                else if(user.category_id == project_category_id){
-                    return true
-                }
-                return false;
             }
 
 
@@ -302,12 +331,14 @@ $user_id = $_SESSION['logged_user_id'];
             }).then((response) => {
                 return response.json();
             }).then(async (data) => {
-                console.log(data)
+                // console.log(data)
+
                 const bid = await total_bid(project_id);
                 const able_to_bid_in_post = await able_to_bid(<?php echo $user_id; ?>, data.category_id);
-                if(able_to_bid_in_post){
+                console.log(able_to_bid_in_post)
+                if (able_to_bid_in_post) {
                     add_bid.style.display = "block";
-                }else{
+                } else {
                     add_bid.style.display = "none";
                 }
 
@@ -315,6 +346,7 @@ $user_id = $_SESSION['logged_user_id'];
                 if (service_post_status === "closed") {
                     add_bid.style.display = "none";
                 }
+                // 
                 container.innerHTML = `
         <div class="card">
             <div>Posted By: ${data.fullname}</div>
@@ -322,13 +354,13 @@ $user_id = $_SESSION['logged_user_id'];
                 <h4>${data.title}</h4>
                 <p>${day_left(data.date_of_completion)}</p>
             </div>
-            <p>${data.project_desc}</p>
+            <i>${data.project_desc}</i>
             <div class="card-info">
                 <span>Budget: ${data.budget}</span>
                 <span>${data.category_name}</span>
                 <span>Address: ${data.address}</span>
                 <span>Deadline: ${data.date_of_completion}</span>
-                <p>${bid} bid</p>
+                <span>${bid} bid</span>
             </div>
         </div>`;
             }).catch((error) => {
@@ -362,13 +394,22 @@ $user_id = $_SESSION['logged_user_id'];
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify(data)
+
                     });
 
                     const responseData = await response.json();
+                    const bid = document.querySelector(".bid");
 
-                    // if (responseData.success == true) {
-                    //     bid_post.style.display = "none";
-                    // }
+                    const submitBtn = document.querySelector(".submit");
+                    submitBtn.addEventListener("click", () => {
+                        const bid = document.querySelector(".bid");
+                        bid.style.display = "none";
+                    })
+
+
+                    if (responseData.success == true) {
+                        bid.style.display = "none";
+                    }
 
 
 
@@ -402,7 +443,7 @@ $user_id = $_SESSION['logged_user_id'];
                         all_bid.innerHTML += `
         <div class="posted_bid">
             <div>
-                <p class="user_name"><span>${bid.fullname}</span></p>
+                <p class="user_name">By: ${bid.fullname}</p>
                 <p class="bid_amount"> Bid amount: ${bid.bid_amount}</p>
                 <p class="posted date">Posted: ${day_ago(bid.bid_post_date)}</p>
             </div>

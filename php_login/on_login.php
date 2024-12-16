@@ -1,9 +1,9 @@
 <?php
-function on_login($pdo){
+function on_login($pdo)
+{
     $email = trim($_POST['email']);
     $pass = trim($_POST['password']);
-    
-    // if there is any empty field
+
     if (empty($email) || empty($pass)) {
         $arr = [];
         if (empty($email)) $arr["email"] = "Must not be empty.";
@@ -13,7 +13,7 @@ function on_login($pdo){
             "field_error" => $arr
         ];
     }
-    
+
     // checking the email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return [
@@ -25,12 +25,11 @@ function on_login($pdo){
     }
 
     // Finding the user by email
-    $stmt= $pdo->prepare('select * from users where email=?');
+    $stmt = $pdo->prepare('select * from users where email=?');
     $stmt->execute([$email]);
-    $row=$stmt->fetch(PDO::FETCH_ASSOC);
-    echo ($row);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     // if the user does not exist in the database
-    if($row === NULL){
+    if ($row === NULL) {
         return [
             "ok" => 0,
             "field_error" => [
@@ -40,8 +39,10 @@ function on_login($pdo){
     }
 
     // Verifying the user password
-    $password_check = password_verify($pass, $row["password"]);
-    if($password_check === false){
+    // $password_check = password_verify($pass, $row["password"]);
+    // $password_check = password_verify($pass, $row["password"]);
+    $password_check = ($pass == $row["password"]);
+    if ($password_check === false) {
         return [
             "ok" => 0,
             "field_error" => [
@@ -51,7 +52,8 @@ function on_login($pdo){
     }
 
     // Setting the user id to the session
-    $_SESSION['logged_user_id'] = $row["user_id"];  
-    header('Location: ../index.php');
+    $_SESSION['logged_user_id'] = $row["user_id"];
+    header('Location:  ../all_post/servicecard.php');
     exit;
 }
+    // if there is any empty field
